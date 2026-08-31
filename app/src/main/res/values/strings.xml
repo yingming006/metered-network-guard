@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">流量守护</string>
+    <string name="device_admin_label">流量守护</string>
+    <string name="device_admin_description">作为设备所有者（Device Owner）管理本机的流量白名单：仅白名单内的应用允许使用流量，其余（含新安装）静默禁用。</string>
+
+    <string name="status_owner_ok">Device Owner 已激活 ✅\n策略已下发并交由系统底层生效，重启后依然有效。</string>
+    <string name="status_owner_no">Device Owner 未激活 ⚠️\n请连接电脑执行：\n\nadb shell dpm set-device-owner com.guard.networkcontrol/.receiver.AdminReceiver\n\n执行后回到本页点击“重新检测”。</string>
+
+    <string name="btn_check_owner">重新检测</string>
+    <string name="btn_help">帮助</string>
+    <string name="help_title">使用说明</string>
+
+    <string name="search_hint">搜索应用名或包名…</string>
+
+    <string name="btn_allow_all">全部放行</string>
+    <string name="btn_disallow_all">全部禁用</string>
+
+    <string name="hdr_whitelist">应用列表（勾选＝允许使用该应用的流量）</string>
+
+
+    <string name="stats_line">流量：受阻 %1$d｜放行 %2$d｜共 %3$d 个</string>
+    <string name="btn_apply">保存并应用</string>
+    <string name="btn_apply_hint">说明：勾选＝允许使用该应用的流量；未勾选（含以后新装）＝禁止使用流量。</string>
+
+    <string name="toast_applied">策略已保存并下发，系统已生效</string>
+    <string name="toast_failed_not_owner">尚未激活 Device Owner，无法下发策略</string>
+    <string name="hint_install">新装的应用自动进入“禁止流量”名单，重启后依旧有效。</string>
+
+    <string-array name="filter_options">
+        <item>全部</item>
+        <item>放行</item>
+        <item>受控</item>
+    </string-array>
+</resources>

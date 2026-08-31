@@ -1,0 +1,37 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.guard.networkcontrol'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.guard.networkcontrol"
+        minSdk 28
+        targetSdk 35
+        versionCode 2
+        versionName "1.1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        abortOnError false
+    }
+}
+
+dependencies {
+    // 纯平台 API 实现，无第三方依赖
+}

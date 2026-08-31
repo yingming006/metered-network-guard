@@ -1,0 +1,11 @@
+# Gradle 构建缓存与产物目录
+.gradle/
+build/
+**/build/
+local.properties
+
+# IDE
+.idea/
+*.iml
+captures/
+.DS_Store

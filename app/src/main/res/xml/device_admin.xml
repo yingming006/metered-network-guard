@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<device-admin xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-policies>
+        <!-- 最低策略集：作为 Device Owner 托管所需；流量管控走 setMeteredDataDisabledPackages -->
+    </uses-policies>
+</device-admin>
