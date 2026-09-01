@@ -1,4 +1,3 @@
-```markdown
 # 流量守护 (NetworkGuard)
 
 基于 Android Device Owner（设备所有者）架构的系统级移动流量白名单管控工具。
@@ -63,6 +62,13 @@ NetworkGuard 基于 Android 原生企业级设备管理接口（`DevicePolicyMan
 注意：本工具仅需在首次配置时连接电脑完成一次性激活，激活后即可脱离电脑独立运行。
 
 ### 1. 安装应用
+将 `release` 目录下的 Release APK（`NetworkGuard-1.1.0-release.apk`）安装到设备：
+
+```bash
+adb install release/NetworkGuard-1.1.0-release.apk
+```
+
+> 提示：首次激活（设置设备所有者）前请勿先手动打开应用，直接完成后续步骤即可。
 
 ### 2. 前置准备
 为了顺利将应用设置为设备所有者（Device Owner），请确保：
@@ -143,4 +149,3 @@ cd metered-network-guard
 ## 授权协议
 
 本项目基于 [MIT License](LICENSE) 开源。
-```
