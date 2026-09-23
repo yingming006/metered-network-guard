@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Process;
 import android.util.Log;
 
 import com.guard.networkcontrol.receiver.AdminReceiver;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +24,33 @@ import java.util.Set;
  */
 public final class PolicyManager {
     private static final String TAG = "PolicyManager";
+
+    /**
+     * 系统联网基础设施包：一旦进入禁用名单，DNS 解析 / 联网校验 / 门户登录 / 系统 UI
+     * 会被一起切断，表现为「已连接 Wi-Fi 但所有应用都无法访问网络」，因此永不加入禁用名单。
+     */
+    private static final Set<String> PROTECTED_PACKAGES = new HashSet<>(Arrays.asList(
+            "android",
+            "com.android.systemui",
+            "com.android.shell",
+            "com.android.settings",
+            "com.android.providers.settings",
+            "com.android.networkstack",
+            "com.android.networkstack.tethering",
+            "com.google.android.networkstack",
+            "com.google.android.networkstack.tethering",
+            "com.android.captiveportallogin",
+            "com.google.android.captiveportallogin",
+            "com.android.wifi.dialog",
+            "com.android.vpndialogs"
+    ));
+
+    /** 本应用自身、联网关键包、以及与系统共享 UID 的平台组件（uid < 10000）都必须放行。 */
+    private static boolean isProtected(Context context, ApplicationInfo ai) {
+        if (ai.packageName.equals(context.getPackageName())) return true;
+        if (PROTECTED_PACKAGES.contains(ai.packageName)) return true;
+        return ai.uid < Process.FIRST_APPLICATION_UID;
+    }
 
     public static boolean isDeviceOwner(Context context) {
         return AdminReceiver.isDeviceOwnerApp(context);
@@ -94,8 +123,13 @@ public final class PolicyManager {
         Set<String> allowedApps = new HashSet<>();
         for (ApplicationInfo ai : installed) {
             if (ai.packageName == null) continue;
-            if (allow.contains(ai.packageName)) allowedApps.add(ai.packageName);
-            else disabled.add(ai.packageName);
+            if (allow.contains(ai.packageName)) {
+                allowedApps.add(ai.packageName);
+                continue;
+            }
+            // 系统联网基础设施不参与管控，避免整机断网
+            if (isProtected(context, ai)) continue;
+            disabled.add(ai.packageName);
         }
 
         List<String> applied = setMeteredDataDisabledPackages(context, disabled);
